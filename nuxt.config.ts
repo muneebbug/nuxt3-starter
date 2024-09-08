@@ -31,6 +31,7 @@ export default defineNuxtConfig({
     '@nuxtjs/tailwindcss',
     'nuxt-security',
     '@nuxt/eslint',
+    'shadcn-nuxt',
   ],
 
   eslint: {
@@ -57,5 +58,9 @@ export default defineNuxtConfig({
         module: 'ESNext',
       },
     },
+  },
+  devServer: {
+    port: 3000,
+    host: '127.0.0.1',
   },
 })

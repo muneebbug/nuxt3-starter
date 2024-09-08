@@ -2,8 +2,8 @@
   "name": "nuxt-starter",
   "version": "3.0.1",
   "private": true,
-  "repository": "https://github.com/becem-gharbi/nuxt-starter.git",
-  "homepage": "https://nuxt-starter.bg.tn",
+  "repository": "https://github.com/muneebbug/nuxt3-starter",
+  "homepage": "https://nuxt3-starter-bay.vercel.app",
   "scripts": {
     "build": "prisma generate && nuxt build",
     "dev": "nuxt dev",
@@ -12,7 +12,14 @@
     "postinstall": "nuxt prepare && prisma generate",
     "release": "npm run lint && npm run typecheck && changelogen --release && git push --follow-tags",
     "lint": "eslint .",
-    "typecheck": "nuxi typecheck"
+    "typecheck": "nuxi typecheck",
+    "prisma:generate": "npx prisma generate",
+    "prisma:db:push": "npx prisma db push",
+    "prisma:db:pull": "npx prisma db pull",
+    "prisma:migrate": "npx prisma migrate dev",
+    "prisma:seed": "pnpm prisma:db:push --force-reset && npx prisma db seed",
+    "prisma:reset": "npx prisma migrate reset",
+    "prisma:studio": "npx prisma studio"
   },
   "devDependencies": {
     "@bg-dev/nuxt-auth": "3.0.1",
@@ -20,17 +27,25 @@
     "@bg-dev/nuxt-s3": "^2.0.1",
     "@nuxt/devtools": "^1.1.5",
     "@nuxt/eslint": "^0.3.13",
-    "@nuxtjs/tailwindcss": "^6.11.4",
+    "@nuxtjs/tailwindcss": "^6.12.0",
     "@types/ua-parser-js": "^0.7.39",
     "changelogen": "^0.5.5",
     "eslint": "^8.57.0",
     "nuxt": "^3.12.2",
     "nuxt-security": "^1.2.2",
-    "prisma": "^5.12.0"
+    "prisma": "^5.12.0",
+    "shadcn-nuxt": "^0.10.4",
+    "typescript": "^5.5.4"
   },
   "dependencies": {
     "@prisma/client": "5.12.0",
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.1.1",
+    "lucide-vue-next": "^0.439.0",
+    "radix-vue": "^1.9.5",
+    "tailwind-merge": "^2.5.2",
+    "tailwindcss-animate": "^1.0.7",
     "ua-parser-js": "^1.0.37"
   },
-  "packageManager": "pnpm@8.7.0+sha1.4a6f863625170af87d027789f72662e0601ecb57"
+  "packageManager": "pnpm@9.7.1+sha1.b0ae55d11432e1af341998848fdc219a62f7623a"
 }
