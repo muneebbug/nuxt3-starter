@@ -36,7 +36,7 @@ const props = withDefaults(defineProps<Props>(), {
   >
     <Loader2
       v-if="loading"
-      class="h-4 w-4 mr-2 animate-spin"
+      class="h-4 w-4 animate-spin"
     />
     <slot v-else />
   </Primitive>
