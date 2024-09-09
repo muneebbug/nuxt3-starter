@@ -90,6 +90,7 @@
                 type="password"
                 placeholder="Password"
                 v-bind="componentField"
+                @input="validateField('password')"
               />
             </FormControl>
             <FormMessage />
@@ -110,6 +111,7 @@
                 type="password"
                 placeholder="Password"
                 v-bind="componentField"
+                @input="validateField('passwordConfirm')"
               />
             </FormControl>
             <FormMessage />
@@ -177,12 +179,12 @@ const formSchema = z.object({
   lastName: z.string({ message: 'Last name is required' }),
 }).refine(data => data.password === data.passwordConfirm, {
   message: 'Passwords do not match',
-  path: ['password', 'passwordConfirm'],
+  path: ['passwordConfirm'],
 })
 
 type RegisterForm = z.infer<typeof formSchema>
 
-const { handleSubmit, isSubmitting, setFieldError } = useForm<RegisterForm>({
+const { handleSubmit, isSubmitting, setFieldError, validateField } = useForm<RegisterForm>({
   validationSchema: toTypedSchema(formSchema),
 })
 

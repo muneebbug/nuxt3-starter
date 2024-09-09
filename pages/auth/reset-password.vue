@@ -1,22 +1,27 @@
 <template>
   <div>
-    <n-result
+    <div
       v-if="success"
-      status="success"
-      title="Done"
-      description="Your password is successfully reset"
     >
-      <template #footer>
-        <nuxt-link
+      <div class="text-center">
+        <Icon
+          name="ph:check-circle-fill"
+          class="text-green-500 mb-2"
+          size="64px"
+        />
+        <p class="text-2xl font-semibold mb-1">
+          Done
+        </p>
+        <p class="text-gray-500 mb-4">
+          Your password is successfully reset
+        </p>
+        <Button
           to="/auth/login"
-          class="no-underline"
         >
-          <n-button type="primary">
-            Go back to login
-          </n-button>
-        </nuxt-link>
-      </template>
-    </n-result>
+          Go back to login
+        </Button>
+      </div>
+    </div>
 
     <n-result
       v-else-if="failure"
@@ -37,93 +42,107 @@
     </n-result>
 
     <div v-else>
-      <n-form
-        ref="formRef"
-        :model="model"
-        :rules="rules"
-        @submit.prevent="onSubmit(handleSubmit)"
+      <form
+        class="space-y-6 mb-4"
+        @submit="onSubmit"
       >
-        <n-form-item
-          label="Password"
-          path="password"
-          :show-require-mark="false"
+        <FormField
+          v-slot="{ componentField }"
+          name="password"
         >
-          <n-input
-            v-model:value="model.password"
-            type="password"
-            show-password-on="click"
-            :input-props="{ autocomplete: 'new-password' }"
-          />
-        </n-form-item>
-
-        <n-form-item
-          label="Confirm Password"
-          path="passwordConfirm"
-          :show-require-mark="false"
+          <FormItem v-auto-animate="{ duration: 100 }">
+            <FormLabel>
+              Password
+            </FormLabel>
+            <FormControl>
+              <Input
+                type="password"
+                placeholder="Password"
+                v-bind="componentField"
+                @input="validateField('password')"
+              />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        </FormField>
+        <FormField
+          v-slot="{ componentField }"
+          name="passwordConfirm"
         >
-          <n-input
-            v-model:value="model.passwordConfirm"
-            type="password"
-            show-password-on="click"
-            :input-props="{ autocomplete: 'new-password' }"
-          />
-        </n-form-item>
-
-        <n-button
-          attr-type="submit"
-          block
-          :disabled="pending"
-          :loading="pending"
-          type="primary"
-        >
-          <template #icon>
-            <naive-icon name="ph:arrows-counter-clockwise-duotone" />
-          </template>
-          Change password
-        </n-button>
-      </n-form>
+          <FormItem v-auto-animate="{ duration: 100 }">
+            <FormLabel>
+              <span>
+                Confirm Password
+              </span>
+            </FormLabel>
+            <FormControl>
+              <Input
+                type="password"
+                placeholder="Password"
+                v-bind="componentField"
+                @input="validateField('passwordConfirm')"
+              />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        </FormField>
+        <div class="space-y-2">
+          <Button
+            class="w-full"
+            type="submit"
+            :loading="isSubmitting"
+          >
+            Reset password
+          </Button>
+        </div>
+      </form>
     </div>
   </div>
 </template>
 
 <script  setup lang="ts">
-definePageMeta({
-  middleware: 'guest',
-  colorMode: 'light',
-  layout: 'auth',
+import { useForm } from 'vee-validate'
+import { toTypedSchema } from '@vee-validate/zod'
+import * as z from 'zod'
+
+import {
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form'
+import { Input } from '@/components/ui/input'
+import { Button } from '@/components/ui/button'
+
+const formSchema = z.object({
+  password: z.string({ message: 'Password is required' }).min(8, { message: 'Password must be at least 8 characters long' }),
+  passwordConfirm: z.string(),
+}).refine(data => data.password === data.passwordConfirm, {
+  message: 'Passwords do not match',
+  path: ['passwordConfirm'],
 })
 
-const { formRef, pending, rules, onSubmit } = useNaiveForm()
+type ResetPasswordForm = z.infer<typeof formSchema>
+
+const { handleSubmit, isSubmitting, validateField } = useForm<ResetPasswordForm>({
+  validationSchema: toTypedSchema(formSchema),
+})
+
 const { resetPassword } = useAuth()
 
 const success = ref(false)
 const failure = ref(false)
 
-const model = ref({
-  password: '',
-  passwordConfirm: '',
-})
-
-rules.value = {
-  password: [
-    {
-      validator: (_, value) => /(?=.*[a-z])(?=.*[0-9])(?=.{6,})/.test(value),
-      message: 'At least 6 characters, 1 lowercase, 1 number',
-      trigger: 'blur',
-    },
-  ],
-  passwordConfirm: [
-    {
-      validator: (_, value) => value === model.value.password,
-      message: 'Passwords do not match',
-      trigger: 'blur',
-    },
-  ],
-}
-
-async function handleSubmit() {
-  await resetPassword(model.value.password)
+const onSubmit = handleSubmit(async (values) => {
+  await resetPassword(values.password)
     .then(() => { success.value = true })
     .catch(() => { failure.value = true })
-}
+})
+
+definePageMeta({
+  middleware: 'guest',
+  colorMode: 'light',
+  layout: 'auth',
+})
 </script>
