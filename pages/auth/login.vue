@@ -8,7 +8,7 @@
         v-slot="{ componentField }"
         name="email"
       >
-        <FormItem>
+        <FormItem v-auto-animate="{ duration: 100 }">
           <FormLabel>Email</FormLabel>
           <FormControl>
             <Input
@@ -24,14 +24,14 @@
         v-slot="{ componentField }"
         name="password"
       >
-        <FormItem>
+        <FormItem v-auto-animate="{ duration: 100 }">
           <FormLabel>
             <span>
               Password
             </span>
             <NuxtLink
               to="/auth/request-password-reset"
-              class="float-end font-normal text-sm"
+              class="float-end font-normal text-sm text-primary"
             >
               <span>
                 Forgot password?
