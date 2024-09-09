@@ -5,11 +5,11 @@
     >
       <div class="text-center">
         <Icon
-          name="ph:check-circle"
+          name="ph:check-circle-fill"
           class="text-green-500 mb-2"
           size="64px"
         />
-        <p class="text-2xl font-semibold">
+        <p class="text-2xl font-semibold mb-1">
           Done
         </p>
         <p class="text-gray-500 mb-4">
