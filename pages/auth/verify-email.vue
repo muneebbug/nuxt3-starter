@@ -1,44 +1,56 @@
 <template>
   <div>
-    <n-result
+    <div
       v-if="$route.query.error"
-      status="error"
-      title="Failed to verify email"
-      :description="$route.query.error.toString()"
     >
-      <template #footer>
-        <nuxt-link
+      <div class="text-center">
+        <Icon
+          name="oui:cross-in-circle-filled"
+          class="text-red-500 mb-2"
+          size="64px"
+        />
+        <p class="text-2xl font-semibold mb-1">
+          Failed to verify email
+        </p>
+        <p class="text-gray-500 mb-4">
+          {{ $route.query.error.toString() }}
+        </p>
+        <Button
           to="/auth/login"
-          class="no-underline"
         >
-          <n-button type="primary">
-            Go back to login
-          </n-button>
-        </nuxt-link>
-      </template>
-    </n-result>
+          Go back to login
+        </Button>
+      </div>
+    </div>
 
-    <n-result
+    <div
       v-else
-      status="success"
-      title="Your email is confirmed"
-      description="Registration successfully completed"
     >
-      <template #footer>
-        <nuxt-link
+      <div class="text-center">
+        <Icon
+          name="ph:check-circle-fill"
+          class="text-green-500 mb-2"
+          size="64px"
+        />
+        <p class="text-2xl font-semibold mb-1">
+          Your email is confirmed
+        </p>
+        <p class="text-gray-500 mb-4">
+          Registration successfully completed
+        </p>
+        <Button
           to="/auth/login"
-          class="no-underline"
         >
-          <n-button type="primary">
-            Go back to login
-          </n-button>
-        </nuxt-link>
-      </template>
-    </n-result>
+          Go back to login
+        </Button>
+      </div>
+    </div>
   </div>
 </template>
 
 <script setup>
+import { Button } from '@/components/ui/button'
+
 definePageMeta({
   middleware: 'guest',
   colorMode: 'light',
