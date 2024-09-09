@@ -60,7 +60,6 @@
           type="button"
           variant="outline"
           class="w-full"
-          :loading="isSubmitting"
           @click="loginWithProvider('google')"
         >
           <Icon
