@@ -1,144 +1,141 @@
 <template>
   <div>
-    <n-form
-      ref="formRef"
-      :rules="rules"
-      :model="model"
-      @submit.prevent="onSubmit(handleSubmit)"
+    <form
+      class="space-y-6 mb-4"
+      @submit="onSubmit"
     >
-      <n-form-item
-        label="Email"
-        path="email"
-        :show-require-mark="false"
+      <FormField
+        v-slot="{ componentField }"
+        name="email"
       >
-        <n-input
-          v-model:value="model.email"
-          :input-props="{ autocomplete: 'username' }"
-        />
-      </n-form-item>
-
-      <n-form-item
-        path="password"
-        :show-require-mark="false"
-        :label-style="{ display: 'block' }"
+        <FormItem>
+          <FormLabel>Email</FormLabel>
+          <FormControl>
+            <Input
+              type="text"
+              placeholder="abc@gmail.com"
+              v-bind="componentField"
+            />
+          </FormControl>
+          <FormMessage />
+        </FormItem>
+      </FormField>
+      <FormField
+        v-slot="{ componentField }"
+        name="password"
       >
-        <n-input
-          v-model:value="model.password"
-          type="password"
-          show-password-on="click"
-          :input-props="{ autocomplete: 'current-password' }"
-        />
-        <template #label>
-          <span>Password</span>
-          <nuxt-link
-            to="/auth/request-password-reset"
-            class="no-underline float-end"
-          >
-            <n-text type="primary">
-              Forgot password?
-            </n-text>
-          </nuxt-link>
-        </template>
-      </n-form-item>
-
-      <div class="flex flex-col gap-4">
-        <n-button
-          attr-type="submit"
-          block
-          :loading="pending"
-          :disabled="pending"
-          type="primary"
+        <FormItem>
+          <FormLabel>
+            <span>
+              Password
+            </span>
+            <NuxtLink
+              to="/auth/request-password-reset"
+              class="float-end font-normal text-sm"
+            >
+              <span>
+                Forgot password?
+              </span>
+            </NuxtLink>
+          </FormLabel>
+          <FormControl>
+            <Input
+              type="password"
+              placeholder="Password"
+              v-bind="componentField"
+            />
+          </FormControl>
+          <FormMessage />
+        </FormItem>
+      </FormField>
+      <div class="space-y-2">
+        <Button
+          class="w-full"
+          type="submit"
+          :loading="isSubmitting"
         >
           Login
-        </n-button>
-
-        <n-button
-          block
+        </Button>
+        <Button
+          type="button"
+          variant="outline"
+          class="w-full"
+          :loading="isSubmitting"
           @click="loginWithProvider('google')"
         >
-          <template #icon>
-            <naive-icon name="devicon:google" />
-          </template>
-          Continue with Google
-        </n-button>
-
-        <n-divider>or</n-divider>
-
-        <nuxt-link to="/auth/register">
-          <n-button
-            attr-type="button"
-            block
-          >
-            Create Account
-          </n-button>
-        </nuxt-link>
+          <Icon
+            name="logos:google-icon"
+            class="mr-2 w-4 h-4"
+          />
+          Login with Google
+        </Button>
       </div>
-    </n-form>
+    </form>
+    <Separator
+      class="my-8"
+      label="Or"
+    />
+    <Button
+      to="/auth/register"
+      variant="outline"
+      class="w-full"
+    >
+      Create an account
+    </Button>
   </div>
 </template>
 
 <script setup lang="ts">
+import { useForm } from 'vee-validate'
+import { toTypedSchema } from '@vee-validate/zod'
+import * as z from 'zod'
+
+import {
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form'
+import { Input } from '@/components/ui/input'
+import { Button } from '@/components/ui/button'
+import { Separator } from '@/components/ui/separator'
+
+const formSchema = z.object({
+  email: z.string({ message: 'Email is required' }).email({ message: 'Invalid email' }),
+  password: z.string({ message: 'Password is required' }).min(8, { message: 'Password must be at least 8 characters long' }),
+})
+
+type LoginForm = z.infer<typeof formSchema>
+
+const { handleSubmit, values: model, isSubmitting } = useForm<LoginForm>({
+  validationSchema: toTypedSchema(formSchema),
+})
+
 definePageMeta({
   colorMode: 'light',
   layout: 'auth',
 })
 
-const { formRef, rules, pending, apiErrors, onSubmit } = useNaiveForm()
 const { login, loginWithProvider } = useAuth()
 
-const model = ref({
-  email: '',
-  password: '',
-})
-
-apiErrors.value = {
+const apiErrors = ref({
   wrongCredentials: false,
   invalidProvider: false,
   accountNotVerified: false,
   accountSuspended: false,
-}
+})
 
-rules.value = {
-  email: [
-    {
-      required: true,
-      message: 'Please input your email',
-      trigger: 'blur',
-    },
-    {
-      type: 'email',
-      message: 'Should be a valid email address',
-    },
-    {
-      message: 'Wrong credentials',
-      validator: () => !apiErrors.value.wrongCredentials,
-    },
-    {
-      message: 'Your account is not verified',
-      validator: () => !apiErrors.value.accountNotVerified,
-    },
-    {
-      message: 'Your account is suspended',
-      validator: () => !apiErrors.value.accountSuspended,
-    },
-  ],
-  password: [
-    {
-      required: true,
-      message: 'Please input your password',
-      trigger: 'blur',
-    },
-  ],
-}
+const onSubmit = handleSubmit(async (values) => {
+  console.log('Form submitted!', values)
 
-async function handleSubmit() {
   await login({
-    email: model.value.email,
-    password: model.value.password,
+    email: model.email,
+    password: model.password,
   }).catch((error) => {
     apiErrors.value.wrongCredentials = error.data.message === 'Wrong credentials'
     apiErrors.value.accountNotVerified = error.data.message === 'Account not verified'
     apiErrors.value.accountSuspended = error.data.message === 'Account suspended'
   })
-}
+})
 </script>

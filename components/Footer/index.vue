@@ -12,24 +12,20 @@
           name="ph:house"
           :size="18"
         />
-        <n-text class="text-gray-500">Home</n-text>
+        <p class="text-gray-500">Home</p>
       </span>
     </nuxt-link>
 
-    <n-text class="text-gray-500">
+    <p class="text-gray-500">
       •
-    </n-text>
+    </p>
 
     <nuxt-link
       :to="repository"
       target="_blank"
     >
       <span class="flex gap-1 items-start">
-        <naive-icon
-          name="tabler:brand-github"
-          :size="18"
-        />
-        <n-text class="text-gray-500">v-{{ version }}</n-text>
+        <p class="text-gray-500">v-{{ version }}</p>
       </span>
     </nuxt-link>
   </footer>

@@ -32,7 +32,12 @@ export default defineNuxtConfig({
     'nuxt-security',
     '@nuxt/eslint',
     'shadcn-nuxt',
+    '@nuxt/icon',
   ],
+  shadcn: {
+    prefix: 'Ui',
+    componentDir: './components/ui',
+  },
 
   eslint: {
     config: {
