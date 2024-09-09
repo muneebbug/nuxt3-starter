@@ -1,90 +1,98 @@
 <template>
   <div>
-    <n-result
+    <div
       v-if="success"
-      status="success"
-      title="Done"
-      description="We've sent you a secure link to reset your password"
     >
-      <template #footer>
-        <nuxt-link
+      <div class="text-center">
+        <Icon
+          name="ph:check-circle"
+          class="text-green-500 mb-2"
+          size="64px"
+        />
+        <p class="text-2xl font-semibold">
+          Done
+        </p>
+        <p class="text-gray-500 mb-4">
+          We've sent you a secure link to reset your password
+        </p>
+        <Button
           to="/auth/login"
-          class="no-underline"
         >
-          <n-button type="primary">
-            Go back to login
-          </n-button>
-        </nuxt-link>
-      </template>
-    </n-result>
+          Go back to login
+        </Button>
+      </div>
+    </div>
 
     <div v-else>
-      <n-form
-        ref="formRef"
-        :rules="rules"
-        :model="model"
-        @submit.prevent="onSubmit(handleSubmit)"
+      <form
+        class="space-y-6 mb-4"
+        @submit="onSubmit"
       >
-        <n-form-item
-          label="Email"
-          path="email"
-          :show-require-mark="false"
+        <FormField
+          v-slot="{ componentField }"
+          name="email"
         >
-          <n-input
-            v-model:value="model.email"
-            :input-props="{ autocomplete: 'username' }"
-          />
-        </n-form-item>
+          <FormItem v-auto-animate="{ duration: 100 }">
+            <FormLabel>Email</FormLabel>
+            <FormControl>
+              <Input
+                type="text"
+                placeholder="abc@gmail.com"
+                v-bind="componentField"
+              />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        </FormField>
 
-        <n-button
-          block
-          attr-type="submit"
-          :loading="pending"
-          type="primary"
+        <Button
+          class="w-full"
+          type="submit"
+          :loading="isSubmitting"
         >
-          <template #icon>
-            <naive-icon name="ph:arrows-counter-clockwise-duotone" />
-          </template>
-          Reset password
-        </n-button>
-      </n-form>
+          Request password reset
+        </Button>
+      </form>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import { useForm } from 'vee-validate'
+import { toTypedSchema } from '@vee-validate/zod'
+import * as z from 'zod'
+
+import {
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form'
+import { Input } from '@/components/ui/input'
+import { Button } from '@/components/ui/button'
+
+const formSchema = z.object({
+  email: z.string({ message: 'Please input your email' }).email({ message: 'Invalid email' }),
+})
+
+type RequestPasswordResetForm = z.infer<typeof formSchema>
+
+const { handleSubmit, isSubmitting } = useForm<RequestPasswordResetForm>({
+  validationSchema: toTypedSchema(formSchema),
+})
+
 definePageMeta({
   middleware: 'guest',
   layout: 'auth',
   colorMode: 'light',
 })
 
-const { formRef, rules, pending, onSubmit } = useNaiveForm()
 const { requestPasswordReset } = useAuth()
 
 const success = ref(false)
-
-const model = ref({
-  email: '',
-})
-
-rules.value = {
-  email: [
-    {
-      required: true,
-      message: 'Please input your email',
-      trigger: 'input',
-    },
-    {
-      type: 'email',
-      message: 'Please enter a valid email',
-      trigger: 'blur',
-    },
-  ],
-}
-
-async function handleSubmit() {
-  await requestPasswordReset(model.value.email)
+const onSubmit = handleSubmit(async (values) => {
+  await requestPasswordReset(values.email)
   success.value = true
-}
+})
 </script>

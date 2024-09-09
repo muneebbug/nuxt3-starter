@@ -107,7 +107,7 @@ const formSchema = z.object({
 
 type LoginForm = z.infer<typeof formSchema>
 
-const { handleSubmit, values: model, isSubmitting } = useForm<LoginForm>({
+const { handleSubmit, isSubmitting } = useForm<LoginForm>({
   validationSchema: toTypedSchema(formSchema),
 })
 
@@ -129,8 +129,8 @@ const onSubmit = handleSubmit(async (values) => {
   console.log('Form submitted!', values)
 
   await login({
-    email: model.email,
-    password: model.password,
+    email: values.email,
+    password: values.password,
   }).catch((error) => {
     apiErrors.value.wrongCredentials = error.data.message === 'Wrong credentials'
     apiErrors.value.accountNotVerified = error.data.message === 'Account not verified'
