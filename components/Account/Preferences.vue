@@ -39,7 +39,8 @@ const colorModeSelectOptions = ref([
   {
     label: 'Dark',
     value: 'dark',
-  }, {
+  },
+  {
     label: 'System',
     value: 'system',
   },
