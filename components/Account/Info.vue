@@ -10,10 +10,10 @@
     >
 
     <div class="flex flex-col text-base md:text-sm">
-      <p strong>
+      <p>
         {{ user.name }}
       </p>
-      <p :depth="3">
+      <p>
         {{ user.email }}
       </p>
     </div>

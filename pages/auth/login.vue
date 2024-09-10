@@ -126,8 +126,6 @@ const apiErrors = ref({
 })
 
 const onSubmit = handleSubmit(async (values) => {
-  console.log('Form submitted!', values)
-
   await login({
     email: values.email,
     password: values.password,

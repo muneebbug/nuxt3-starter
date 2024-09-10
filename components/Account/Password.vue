@@ -85,8 +85,6 @@ const apiErrors = ref({
 })
 
 const onSubmit = handleSubmit(async (values) => {
-  console.log('Form submitted!', values)
-
   await changePassword(values).catch((error) => {
     if (error.data.message === 'Wrong password') {
       apiErrors.value.wrongPassword = true

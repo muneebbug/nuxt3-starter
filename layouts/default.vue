@@ -79,16 +79,22 @@
             <DropdownMenuItem
               v-for="option in dropdownOptions"
               :key="option.label"
+              class="p-0 cursor-pointer"
             >
               <NuxtLink
                 :to="option.to"
-                class="w-full"
+                class="w-full h-full py-2 px-4"
               >
                 {{ option.label }}
               </NuxtLink>
             </DropdownMenuItem>
-            <DropdownMenuItem @click="logout">
-              Logout
+            <DropdownMenuItem
+              class="p-0 cursor-pointer"
+              @click="logout"
+            >
+              <div class="w-full h-full py-2 px-4">
+                Logout
+              </div>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
