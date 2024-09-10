@@ -19,7 +19,7 @@
         </div>
 
         <div>
-          <footer />
+          <Footer />
         </div>
       </div>
 

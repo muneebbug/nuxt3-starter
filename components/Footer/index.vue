@@ -1,40 +1,39 @@
 <template>
   <footer
-    :style="{ backgroundColor: naiveTheme.bodyColor }"
     class="text-gray-500"
   >
-    <nuxt-link
+    <NuxtLink
       :to="homepage"
       target="_blank"
+      external
     >
       <span class="flex gap-1 items-start">
-        <naive-icon
+        <Icon
           name="ph:house"
-          :size="18"
+          size="18"
         />
         <p class="text-gray-500">Home</p>
       </span>
-    </nuxt-link>
+    </NuxtLink>
 
     <p class="text-gray-500">
       •
     </p>
 
-    <nuxt-link
+    <NuxtLink
       :to="repository"
       target="_blank"
+      external
     >
       <span class="flex gap-1 items-start">
         <p class="text-gray-500">v-{{ version }}</p>
       </span>
-    </nuxt-link>
+    </NuxtLink>
   </footer>
 </template>
 
 <script setup>
 import { version, repository, homepage } from '../../package.json'
-
-const naiveTheme = useThemeVars()
 </script>
 
 <style scoped>
