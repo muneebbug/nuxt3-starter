@@ -85,7 +85,6 @@ const { handleSubmit, isSubmitting } = useForm<RequestPasswordResetForm>({
 definePageMeta({
   middleware: 'guest',
   layout: 'auth',
-  colorMode: 'light',
 })
 
 const { requestPasswordReset } = useAuth()

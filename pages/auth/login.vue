@@ -112,7 +112,6 @@ const { handleSubmit, isSubmitting } = useForm<LoginForm>({
 })
 
 definePageMeta({
-  colorMode: 'light',
   layout: 'auth',
 })
 

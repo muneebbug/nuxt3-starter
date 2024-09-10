@@ -23,24 +23,24 @@
   },
   "devDependencies": {
     "@bg-dev/nuxt-auth": "3.0.1",
-    "@bg-dev/nuxt-naiveui": "2.0.0-rc.1",
     "@bg-dev/nuxt-s3": "^2.0.1",
-    "@nuxt/devtools": "^1.1.5",
-    "@nuxt/eslint": "^0.3.13",
+    "@nuxt/devtools": "^1.4.1",
+    "@nuxt/eslint": "^0.5.6",
     "@nuxt/icon": "^1.5.1",
-    "@nuxtjs/tailwindcss": "^6.12.0",
+    "@nuxtjs/color-mode": "^3.4.4",
+    "@nuxtjs/tailwindcss": "^6.12.1",
     "@types/ua-parser-js": "^0.7.39",
     "changelogen": "^0.5.5",
-    "eslint": "^8.57.0",
-    "nuxt": "^3.12.2",
-    "nuxt-security": "^1.2.2",
-    "prisma": "^5.12.0",
+    "eslint": "^9.10.0",
+    "nuxt": "^3.13.1",
+    "nuxt-security": "2.0.0-rc.9",
+    "prisma": "^5.19.1",
     "shadcn-nuxt": "^0.10.4",
-    "typescript": "^5.5.4"
+    "typescript": "^5.6.2"
   },
   "dependencies": {
     "@formkit/auto-animate": "^0.8.2",
-    "@prisma/client": "5.12.0",
+    "@prisma/client": "5.19.1",
     "@vee-validate/zod": "^4.13.2",
     "@vueuse/core": "^11.0.3",
     "class-variance-authority": "^0.7.0",
@@ -49,7 +49,7 @@
     "radix-vue": "^1.9.5",
     "tailwind-merge": "^2.5.2",
     "tailwindcss-animate": "^1.0.7",
-    "ua-parser-js": "^1.0.37",
+    "ua-parser-js": "^1.0.38",
     "vee-validate": "^4.13.2",
     "zod": "^3.23.8"
   }

@@ -1,11 +1,9 @@
 <template>
-  <naive-config>
-    <nuxt-loading-indicator
+  <NuxtLayout>
+    <NuxtLoadingIndicator
       color="#2563eb"
       :height="3"
     />
-    <nuxt-layout>
-      <nuxt-page />
-    </nuxt-layout>
-  </naive-config>
+    <NuxtPage />
+  </NuxtLayout>
 </template>

@@ -1,8 +1,7 @@
-import { auth, naiveui, tailwindcss, s3, security } from './config'
+import { auth, tailwindcss, s3, security } from './config'
 
 export default defineNuxtConfig({
   ssr: true,
-
   devtools: { enabled: false },
 
   nitro: {
@@ -26,14 +25,15 @@ export default defineNuxtConfig({
 
   modules: [
     '@bg-dev/nuxt-auth',
-    '@bg-dev/nuxt-naiveui',
     '@bg-dev/nuxt-s3',
     '@nuxtjs/tailwindcss',
     'nuxt-security',
     '@nuxt/eslint',
     'shadcn-nuxt',
     '@nuxt/icon',
+    '@nuxtjs/color-mode',
   ],
+
   shadcn: {
     prefix: 'Ui',
     componentDir: './components/ui',
@@ -46,10 +46,14 @@ export default defineNuxtConfig({
   },
 
   auth,
-  naiveui,
   tailwindcss,
   s3,
   security,
+
+  colorMode: {
+    classSuffix: '',
+    classPrefix: '',
+  },
 
   routeRules: {
     '/api/s3/mutation/**': { security: { xssValidator: false } },
@@ -64,8 +68,11 @@ export default defineNuxtConfig({
       },
     },
   },
+
   devServer: {
     port: 3000,
     host: '127.0.0.1',
   },
+
+  compatibilityDate: '2024-09-10',
 })

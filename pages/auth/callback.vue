@@ -35,6 +35,5 @@ import { Loader2 } from 'lucide-vue-next'
 
 definePageMeta({
   layout: 'auth',
-  colorMode: 'light',
 })
 </script>

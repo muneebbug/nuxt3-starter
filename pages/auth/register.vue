@@ -223,7 +223,6 @@ const onSubmit = handleSubmit(async (values) => {
 
 definePageMeta({
   middleware: 'guest',
-  colorMode: 'light',
   layout: 'auth',
 })
 </script>

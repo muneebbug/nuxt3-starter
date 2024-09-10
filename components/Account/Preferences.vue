@@ -1,5 +1,5 @@
 <template>
-  <Select v-model="preference">
+  <Select v-model="colorMode.preference">
     <SelectTrigger class="w-full">
       <SelectValue placeholder="Color Mode" />
     </SelectTrigger>
@@ -29,12 +29,7 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 
-const { colorModePreference } = useNaiveColorMode()
-
-const preference = computed({
-  get: () => colorModePreference.get(),
-  set: value => colorModePreference.set(value),
-})
+const colorMode = useColorMode()
 
 const colorModeSelectOptions = ref([
   {

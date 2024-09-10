@@ -53,7 +53,6 @@ import { Button } from '@/components/ui/button'
 
 definePageMeta({
   middleware: 'guest',
-  colorMode: 'light',
   layout: 'auth',
 })
 </script>
