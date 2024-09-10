@@ -3,16 +3,15 @@
     <div class="flex-1 flex">
       <div class="md:w-1/3 w-full flex flex-col justify-between">
         <div class="px-8 mt-10">
-          <n-text class="text-lg font-semibold">
+          <p class="text-lg font-semibold">
             Nuxt starter
-          </n-text>
-          <br>
-          <n-text
+          </p>
+          <p
             class="text-lg"
             :depth="2"
           >
             {{ title }}
-          </n-text>
+          </p>
         </div>
 
         <div class="px-8 py-4 max-w-sm mx-auto w-full">
