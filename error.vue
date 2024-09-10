@@ -1,32 +1,24 @@
 <template>
-  <naive-config>
-    <div class="page justify-center items-center">
-      <n-result
-        :status="status"
-        :builtin-theme-overrides="{ titleFontSizeMedium: '24px' }"
-        :title="error.statusMessage || 'Oops, something went wrong'"
-        :description="error.message"
-      >
-        <template #footer>
-          <n-button
-            type="primary"
-            @click="handleError"
-          >
-            Back home
-          </n-button>
-        </template>
-      </n-result>
-    </div>
-  </naive-config>
+  <div class="page justify-center items-center">
+    <Result
+      :status="status"
+      :title="error.statusMessage || 'Oops, something went wrong'"
+      :description="error.message"
+    />
+    <Button
+      @click="handleError"
+    >
+      Back home
+    </Button>
+  </div>
 </template>
 
 <script setup lang="ts">
-import type { ResultProps } from 'naive-ui'
 import type { NuxtError } from '#app'
+import { Button } from '@/components/ui/button'
 
 const props = defineProps<{ error: NuxtError }>()
 
-const status = computed(() => props.error.statusCode?.toString() as ResultProps['status'])
-
+const status = computed(() => props.error.statusCode?.toString())
 const handleError = () => clearError({ redirect: '/' })
 </script>

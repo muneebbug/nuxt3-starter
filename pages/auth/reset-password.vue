@@ -23,23 +23,27 @@
       </div>
     </div>
 
-    <n-result
+    <div
       v-else-if="failure"
-      status="error"
-      title="Failed to reset password"
-      description="You do not have permission"
+      class="text-center"
     >
-      <template #footer>
-        <nuxt-link
-          to="/auth/login"
-          class="no-underline"
-        >
-          <n-button type="primary">
-            Go back to login
-          </n-button>
-        </nuxt-link>
-      </template>
-    </n-result>
+      <Icon
+        name="oui:cross-in-circle-filled"
+        class="text-red-500 mb-2"
+        size="64px"
+      />
+      <p class="text-2xl font-semibold mb-1">
+        Failed to reset password
+      </p>
+      <p class="text-gray-500 mb-4">
+        You do not have permission
+      </p>
+      <Button
+        to="/auth/login"
+      >
+        Go back to login
+      </Button>
+    </div>
 
     <div v-else>
       <form
