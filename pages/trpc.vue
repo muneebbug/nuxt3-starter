@@ -11,7 +11,10 @@
         {{ hello?.result }}
       </CardContent>
       <CardFooter>
-        <Button @click="() => increment()">
+        <Button
+          :loading="queryStatus === 'pending'"
+          @click="() => increment()"
+        >
           increment public
         </Button>
       </CardFooter>
@@ -27,7 +30,10 @@
         {{ helloAuth?.result }}
       </CardContent>
       <CardFooter>
-        <Button @click="() => incrementAuth()">
+        <Button
+          :loading="authQueryStatus === 'pending'"
+          @click="() => incrementAuth()"
+        >
           Authenticated Increment
         </Button>
       </CardFooter>
@@ -50,14 +56,14 @@ const { $client } = useNuxtApp()
 const count = useState('count', () => 0)
 const countAuthed = useState('countAuth', () => 0)
 // async trpc state
-const { data: hello } = await useAsyncData(
+const { data: hello, status: queryStatus } = await useAsyncData(
   () =>
     $client.increment.unauthenticated.query({
       text: `#${count.value}`,
     }),
   { watch: [count] },
 )
-const { data: helloAuth } = await useAsyncData(
+const { data: helloAuth, status: authQueryStatus } = await useAsyncData(
   () =>
     $client.increment.authenticated.query({
       text: `#${countAuthed.value}`,
