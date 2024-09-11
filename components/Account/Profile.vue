@@ -149,13 +149,15 @@ const onSubmit = handleSubmit(async (values) => {
     values.picture = url
   }
 
-  await useNuxtApp().$auth.fetch('/api/user', {
-    method: 'patch',
-    body: {
-      name: values.name,
-      picture: values.picture,
-    },
-  })
+  await useNuxtApp().$client.user.update.mutate(values)
+
+  // await useNuxtApp().$auth.fetch('/api/user', {
+  //   method: 'patch',
+  //   body: {
+  //     name: values.name,
+  //     picture: values.picture,
+  //   },
+  // })
 
   await fetchUser()
   setValues({
