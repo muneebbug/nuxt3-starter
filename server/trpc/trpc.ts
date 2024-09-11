@@ -4,17 +4,31 @@
  * - We export only the functionality that we use so we can enforce which base procedures should be used
  *
  * Learn how to create protected base procedures and other things below:
- * @see https://trpc.io/docs/server/routers
- * @see https://trpc.io/docs/server/procedures
+ * @see https://trpc.io/docs/v10/router
+ * @see https://trpc.io/docs/v10/procedures
  */
-import { initTRPC } from '@trpc/server'
+import { TRPCError, initTRPC } from '@trpc/server'
+import type { Context } from '~/server/trpc/context'
 
-const t = initTRPC.create()
+const t = initTRPC.context<Context>().create({
+  // transformer: superjson,
+})
 
 /**
- * Unprotected procedure
+ * Authentication middleware
  **/
-export const publicProcedure = t.procedure
+const authMiddleware = t.middleware(({ ctx, next }) => {
+  if (!ctx.auth.data?.userId || !ctx.auth.data?.verified) {
+    throw new TRPCError({ code: 'UNAUTHORIZED' })
+  }
+  return next({
+    ctx: {
+      auth: { ...ctx.auth },
+    },
+  })
+})
 
+export const publicProcedure = t.procedure
+export const protectedProcedure = t.procedure.use(authMiddleware)
 export const router = t.router
 export const middleware = t.middleware
