@@ -13,6 +13,7 @@
       <CardFooter>
         <Button
           :loading="queryStatus === 'pending'"
+          :disabled="queryStatus === 'pending'"
           @click="() => increment()"
         >
           increment public
@@ -32,6 +33,7 @@
       <CardFooter>
         <Button
           :loading="authQueryStatus === 'pending'"
+          :disabled="authQueryStatus === 'pending'"
           @click="() => incrementAuth()"
         >
           Authenticated Increment

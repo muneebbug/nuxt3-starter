@@ -34,10 +34,16 @@ const props = withDefaults(defineProps<Props>(), {
     :as-child="asChild"
     :class="cn(buttonVariants({ variant, size }), props.class)"
   >
-    <Loader2
-      v-if="loading"
-      class="h-4 w-4 animate-spin"
-    />
-    <slot v-else />
+    <span
+      :class="props.loading ? 'opacity-100' : 'opacity-0'"
+      class="absolute inset-0 flex items-center justify-center"
+    >
+      <Loader2
+        class="h-4 w-4 animate-spin"
+      />
+    </span>
+    <span :class="props.loading ? 'opacity-0' : 'opacity-100'">
+      <slot />
+    </span>
   </Primitive>
 </template>
