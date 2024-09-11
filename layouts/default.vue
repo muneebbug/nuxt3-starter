@@ -145,7 +145,7 @@ const drawerRoutes = [
   },
   {
     label: 'TRPC',
-    icon: 'ph:code',
+    icon: 'simple-icons:trpc',
     to: '/trpc',
   },
 ]
