@@ -16,7 +16,7 @@
           :disabled="queryStatus === 'pending'"
           @click="() => increment()"
         >
-          increment public
+          Increment
         </Button>
       </CardFooter>
     </Card>
@@ -36,7 +36,7 @@
           :disabled="authQueryStatus === 'pending'"
           @click="() => incrementAuth()"
         >
-          Authenticated Increment
+          Increment
         </Button>
       </CardFooter>
     </Card>
