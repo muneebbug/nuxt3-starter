@@ -1,4 +1,4 @@
-# Nuxt starter
+# Nuxt 3 starter
 
 A modular template that provides essential features to quickly get started on your full stack Nuxt project
 
@@ -8,13 +8,13 @@ A modular template that provides essential features to quickly get started on yo
 - ✔️ Prisma integration
 - ✔️ User authentication with password and social login via [@bg-dev/nuxt-auth](https://nuxt-auth.bg.tn) module
 - ✔️ File upload to S3 compatible file storage services via [@bg-dev/nuxt-s3](https://nuxt-s3.bg.tn) module
-- ✔️ Customizable UI layer based on Naive UI via [@bg-dev/nuxt-naiveui](https://nuxt-naiveui.bg.tn) module
+- ✔️ Customizable UI layer based on SHAD-CN Nuxt via [shadcn-nuxt](https://nuxt.com/modules/shadcn) module
 - ✔️ Tailwindcss integration via [@nuxtjs/tailwindcss](https://tailwindcss.nuxtjs.org) module
 - ✔️ HTTP security via [nuxt-security](https://nuxt-security.vercel.app) module
 
 ## Setup
 
-1. Create new repository from this [template](https://github.com/becem-gharbi/nuxt-starter).
+1. Create new repository from this [template](https://github.com/muneebbug/nuxt3-starter).
 1. Rename `.example.env` to `.env` and set the environment variables.
 1. Make sure to install the dependencies:
 
