@@ -33,9 +33,6 @@ export default defineNuxtConfig({
     '@nuxt/icon',
     '@nuxtjs/color-mode',
   ],
-  build: {
-    transpile: ['trpc-nuxt'],
-  },
 
   shadcn: {
     prefix: 'Ui',

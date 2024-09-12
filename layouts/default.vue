@@ -15,12 +15,6 @@
         >
           Dashboard
         </NuxtLink>
-        <NuxtLink
-          to="/trpc"
-          class="text-foreground transition-colors hover:text-foreground"
-        >
-          TRPC
-        </NuxtLink>
       </nav>
       <Sheet>
         <SheetTrigger as-child>
@@ -142,11 +136,6 @@ const drawerRoutes = [
     label: 'Account',
     icon: 'ph:user',
     to: '/account',
-  },
-  {
-    label: 'TRPC',
-    icon: 'simple-icons:trpc',
-    to: '/trpc',
   },
 ]
 
